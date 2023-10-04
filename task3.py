@@ -1,4 +1,5 @@
 import random
+import statistics
 class NPC:
     stats = {
         'str' : 0,
@@ -43,8 +44,26 @@ class NPC:
         return
     
 npcs = [NPC()for _ in range(100)]
+levels= {level: sum(1 for npc in npcs if npc.level == level) for level in range(1,5)}
+for level, count in levels.items():
+    print(f"Level {level}: {count} NPCs")
 
 
+hpval=[npc.hp for npc in npcs]
+wealthval=[(npc.gold * 10 * 10) + (npc.silver * 10) + npc.copper for npc in npcs]
+meancalc=statistics.mean(hpval)
+sdcalc=statistics.stdev(hpval)
+
+meanwealth=statistics.mean(wealthval)
+sdcalcforwealth=statistics.stdev(wealthval)
+
+print("\nStatistics for HP:")
+print(f"Mean HP: {meancalc:.2f}")
+print(f"Standard Deviation of HP: {sdcalcforwealth:.2f}")
+
+print("\nStatistics for Wealth (in copper):")
+print(f"Mean Wealth (in copper): {meanwealth:.2f}")
+print(f"Standard Deviation of Wealth (in copper): {sdcalcforwealth:.2f}")
 
 #Rules: 
 # each primary stat is generated as 3 random dice rolls (random 1-6) (strength, intelligance, piety, agility, stamina, charm)
